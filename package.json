@@ -1,7 +1,7 @@
 {
   "name": "express-ws",
-  "version": "0.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "WebSocket endpoints for express applications",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
