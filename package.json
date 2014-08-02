@@ -9,10 +9,25 @@
   "author": "Henning Morud <henning@morud.org>",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "ws": "~0.4.31",
-    "node-mocks-http": "~1.0.1"
+    "ws": "~0.4.31"
   },
   "devDependencies": {
     "express": "~4.0.0-rc3"
-  }
+  },
+  "directories": {
+    "example": "examples"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HenningM/express-ws"
+  },
+  "keywords": [
+    "express",
+    "ws",
+    "websocket"
+  ],
+  "bugs": {
+    "url": "https://github.com/HenningM/express-ws/issues"
+  },
+  "homepage": "https://github.com/HenningM/express-ws"
 }
