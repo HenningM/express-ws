@@ -1,3 +1,4 @@
+var path = require('path');
 var httpMocks = require('node-mocks-http');
 var WebSocketServer = require('ws').Server;
 
@@ -16,7 +17,7 @@ module.exports = function (app, server) {
 
     var wss = new WebSocketServer({
       server: server,
-      path: route
+      path: path.join(app.mountpath, route)
     });
     wss.on('connection', function(ws) {
       var dummyRes = httpMocks.createResponse();
