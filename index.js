@@ -1,5 +1,6 @@
 var path = require('path');
-var ServerResponse = require('http').ServerResponse;
+var http = require('http');
+var ServerResponse = http.ServerResponse;
 var WebSocketServer = require('ws').Server;
 
 /**
@@ -8,13 +9,11 @@ var WebSocketServer = require('ws').Server;
  */
 module.exports = function (app, server) {
   if(!server) {
-    var app_listen = app.listen
+    var server = http.createServer(app);
 
     app.listen = function()
     {
-      server = app_listen.apply(app, arguments)
-
-      return server
+      return server.listen.apply(server, arguments)
     }
   }
 
