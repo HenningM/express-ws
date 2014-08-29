@@ -1,13 +1,30 @@
 var path = require('path');
-var httpMocks = require('node-mocks-http');
+var ServerResponse = require('http').ServerResponse;
 var WebSocketServer = require('ws').Server;
 
+/**
+ * @param {express.Application} app
+ * @param {http.Server} [server]
+ */
 module.exports = function (app, server) {
-  var addSocketRoute = function (route, middleware, callback) {
+  if(!server) {
+    var app_listen = app.listen
+
+    app.listen = function()
+    {
+      server = app_listen.apply(app, arguments)
+
+      return server
+    }
+  }
+
+  function addSocketRoute(route, middleware, callback) {
     var args = [].splice.call(arguments, 0);
-    if (args.length < 2) {
-      return;
-    } else if (args.length === 2) {
+
+    if (args.length < 2)
+      throw new SyntaxError('Invalid number of arguments');
+
+    if (args.length === 2) {
       middleware = [middleware];
     } else if (typeof middleware === 'object') {
       middleware.push(callback);
@@ -20,13 +37,13 @@ module.exports = function (app, server) {
       path: path.join(app.mountpath, route)
     });
     wss.on('connection', function(ws) {
-      var dummyRes = httpMocks.createResponse();
-      dummyRes.writeHead = function (statusCode) {
+      var response = new ServerResponse(ws.upgradeReq);
+      response.writeHead = function (statusCode) {
         if (statusCode > 200) ws.close();
       };
       ws.upgradeReq.method = 'ws';
 
-      app.handle(ws.upgradeReq, dummyRes, function(err) {
+      app.handle(ws.upgradeReq, response, function(err) {
         var idx = 0;
         (function next (err) {
           if (err) return;
@@ -34,7 +51,7 @@ module.exports = function (app, server) {
           if (!middleware[idx]) {
             cur(ws, ws.upgradeReq);
           } else {
-            cur(ws.upgradeReq, dummyRes, next);
+            cur(ws.upgradeReq, response, next);
           }
         }());
       });
@@ -42,4 +59,6 @@ module.exports = function (app, server) {
   };
 
   app.ws = addSocketRoute;
+
+  return app
 };
