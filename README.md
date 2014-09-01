@@ -7,7 +7,7 @@ WebSocket endpoints for express applications. Gives WebSocket connections access
 ## Usage
 Add this line to your express application:
 ```javascript
-var expressWs = require('express-ws')(app, server); //app = express app, server = http server
+var expressWs = require('express-ws')(app); //app = express app
 ```
 
 Now you will be able to add WebSocket routes (almost) the same way you add other routes. The following snippet sets up a simple echo server at `/echo`.
@@ -23,8 +23,7 @@ app.ws('/echo', function(ws, req) {
 ```javascript
 var express = require('express');
 var app = express();
-var server = require('http').createServer(app);
-var expressWs = require('express-ws')(app, server);
+var expressWs = require('express-ws')(app);
 
 app.use(function (req, res, next) {
   console.log('middleware');

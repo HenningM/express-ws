@@ -9,7 +9,7 @@ var WebSocketServer = require('ws').Server;
  */
 module.exports = function (app, server) {
   if(!server) {
-    var server = http.createServer(app);
+    server = http.createServer(app);
 
     app.listen = function()
     {
