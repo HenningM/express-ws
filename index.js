@@ -52,7 +52,7 @@ module.exports = function (app, server) {
           } else {
             cur(ws.upgradeReq, response, next);
           }
-        }());
+        }(err));
       });
     });
   };
