@@ -55,6 +55,8 @@ module.exports = function (app, server) {
         }(err));
       });
     });
+
+    return app;
   };
 
   app.ws = addSocketRoute;
