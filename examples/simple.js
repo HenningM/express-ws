@@ -1,9 +1,8 @@
-#!/usr/bin/env node
-
 var express = require('express');
 var expressWs = require('..')
 
-var app = expressWs(express());
+var expressWs = expressWs(express());
+var app = expressWs.app;
 
 app.use(function (req, res, next) {
   console.log('middleware');

@@ -3,6 +3,8 @@ var http = require('http');
 var ServerResponse = http.ServerResponse;
 var WebSocketServer = require('ws').Server;
 
+var wsServers = {};
+
 /**
  * @param {express.Application} app
  * @param {http.Server} [server]
@@ -19,6 +21,7 @@ module.exports = function (app, server) {
 
   function addSocketRoute(route, middleware, callback) {
     var args = [].splice.call(arguments, 0);
+    var wsPath = path.join(app.mountpath, route);
 
     if (args.length < 2)
       throw new SyntaxError('Invalid number of arguments');
@@ -33,8 +36,11 @@ module.exports = function (app, server) {
 
     var wss = new WebSocketServer({
       server: server,
-      path: path.join(app.mountpath, route)
+      path: wsPath
     });
+
+    wsServers[wsPath] = wss;
+
     wss.on('connection', function(ws) {
       var response = new ServerResponse(ws.upgradeReq);
       response.writeHead = function (statusCode) {
@@ -61,5 +67,10 @@ module.exports = function (app, server) {
 
   app.ws = addSocketRoute;
 
-  return app
+  return {
+    app: app,
+    getWss: function (route) {
+      return wsServers[route];
+    }
+  };
 };
