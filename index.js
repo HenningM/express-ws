@@ -1,4 +1,4 @@
-var path = require('path');
+var url = require('url');
 var http = require('http');
 var ServerResponse = http.ServerResponse;
 var WebSocketServer = require('ws').Server;
@@ -21,7 +21,7 @@ module.exports = function (app, server) {
 
   function addSocketRoute(route, middleware, callback) {
     var args = [].splice.call(arguments, 0);
-    var wsPath = path.join(app.mountpath, route);
+    var wsPath = url.resolve(app.mountpath, route);
 
     if (args.length < 2)
       throw new SyntaxError('Invalid number of arguments');
