@@ -5,6 +5,14 @@ var WebSocketServer = require('ws').Server;
 
 var wsServers = {};
 
+function resolvePath(mountpoint, route) {
+  mountpoint = (mountpoint + "/").replace("//", "/");
+  if (route.length > 0 && route.charAt(0) === "/") {
+    route = route.slice(1);
+  }
+  return url.resolve(mountpoint, route);
+};
+
 /**
  * @param {express.Application} app
  * @param {http.Server} [server]
@@ -21,7 +29,7 @@ module.exports = function (app, server) {
 
   function addSocketRoute(route, middleware, callback) {
     var args = [].splice.call(arguments, 0);
-    var wsPath = url.resolve(app.mountpath, route);
+    var wsPath = resolvePath(app.mountpath, route);
 
     if (args.length < 2)
       throw new SyntaxError('Invalid number of arguments');
