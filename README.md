@@ -43,5 +43,5 @@ app.ws('/', function(ws, req) {
   console.log('socket', req.testing);
 });
 
-server.listen(3000);
+app.listen(3000);
 ```
