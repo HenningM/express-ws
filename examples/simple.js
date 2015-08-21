@@ -1,5 +1,5 @@
 var express = require('express');
-var expressWs = require('..')
+var expressWs = require('..');
 
 var expressWs = expressWs(express());
 var app = expressWs.app;
