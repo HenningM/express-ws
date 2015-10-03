@@ -39,10 +39,7 @@ module.exports = function (app, server) {
       if (statusCode > 200) ws.close();
     };
     ws.upgradeReq.ws = ws;
-    if (ws.upgradeReq.url.slice(-1) !== '/') {
-      ws.upgradeReq.url += '/';
-    }
-    ws.upgradeReq.url += '.websocket';
+    ws.upgradeReq.url = '/.websocket/' + ws.upgradeReq.url;
 
     app.handle(ws.upgradeReq, response, function() {
       if (!ws.upgradeReq.wsHandled) {
@@ -53,10 +50,7 @@ module.exports = function (app, server) {
 
   function addSocketRoute(route, middleware) {
     var args = [].splice.call(arguments, 0);
-    if (route.slice(-1) !== '/') {
-      route += '/';
-    }
-    route += '.websocket';
+    route = '/.websocket/' + route;
 
     var middlewares = args.slice(1).map(wrapWsHandler);
     var routeArgs = [route].concat(middlewares);
