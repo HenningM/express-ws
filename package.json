@@ -1,6 +1,6 @@
 {
   "name": "express-ws",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "description": "WebSocket endpoints for express applications",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,8 @@
   },
   "author": "Henning Morud <henning@morud.org>",
   "contributors": [
-    "Jesús Leganés Combarro <piranna@gmail.com>"
+    "Jesús Leganés Combarro <piranna@gmail.com>",
+    "Andrew Phillips <theasp@gmail.com>"
   ],
   "license": "BSD-2-Clause",
   "dependencies": {
