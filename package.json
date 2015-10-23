@@ -13,11 +13,11 @@
   ],
   "license": "BSD-2-Clause",
   "dependencies": {
-    "url-join": "0.0.1",
-    "ws": "~0.4.31"
+    "url-join": "^0.0.1",
+    "ws": "^0.8.0"
   },
   "devDependencies": {
-    "express": "~4.0.0-rc3"
+    "express": "^4.13.3"
   },
   "directories": {
     "example": "examples"
