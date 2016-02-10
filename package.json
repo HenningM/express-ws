@@ -1,7 +1,7 @@
 {
   "name": "express-ws",
   "version": "1.0.0-rc.2",
-  "description": "WebSocket endpoints for express applications",
+  "description": "WebSocket endpoints for Express applications",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,11 +13,10 @@
   ],
   "license": "BSD-2-Clause",
   "dependencies": {
-    "url-join": "0.0.1",
-    "ws": "~0.4.31"
+    "ws": "^0.4.32"
   },
-  "devDependencies": {
-    "express": "~4.0.0-rc3"
+  "peerDependencies": {
+    "express": "^4.0.0"
   },
   "directories": {
     "example": "examples"
@@ -33,6 +32,9 @@
   ],
   "bugs": {
     "url": "https://github.com/HenningM/express-ws/issues"
+  },
+  "scripts": {
+    "build": "babel src/ -d lib/"
   },
   "homepage": "https://github.com/HenningM/express-ws"
 }
