@@ -2,7 +2,7 @@
 
 [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) endpoints for [Express](http://expressjs.com/) applications. Lets you define WebSocket endpoints like any other type of route, and applies regular Express midddleware like for anything else.
 
-If you've used an older version of `express-ws` before, please make sure to read the Changelog at the bottom of this document - some things have changed.
+Version 2.0 of this library contains a breaking change. Please make sure to read the CHANGELOG.md before upgrading.
 
 ## Installation
 
@@ -108,13 +108,3 @@ This module is written in ES6, and uses Babel for compilation. What this means i
 
 * The source code lives in the `src/` directory.
 * After changing this code, make sure to run `npm run build` to compile it.
-
-## Changelog
-
-### v2.0
-
-* __[BREAKING]__ Now supports Express Routers as well. A side-effect of this is that the Router prototype is modified to add a `.ws` method - in rare cases, this may interfere with existing code that relies on the Router prototype either remaining unchanged, or adding its own `.ws` method to it.
-
-  A `leaveRouterUntouched` option has been added to prevent this behaviour; see the API documentation for more information.
-
-* [minor] You can now add `.ws` functionality to any custom Router object that follows the Express Router API.
