@@ -1,5 +1,4 @@
 var url = require('url');
-var urlJoin = require('url-join');
 var http = require('http');
 var ServerResponse = http.ServerResponse;
 var WebSocketServer = require('ws').Server;
