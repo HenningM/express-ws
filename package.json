@@ -13,10 +13,13 @@
   ],
   "license": "BSD-2-Clause",
   "dependencies": {
-    "ws": "~0.4.31"
+    "ws": "^1.0.0"
   },
   "devDependencies": {
-    "express": "~4.0.0-rc3"
+    "express": "^4.0.0"
+  },
+  "peerDependencies": {
+    "express": "^4.0.0"
   },
   "directories": {
     "example": "examples"
