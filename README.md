@@ -1,7 +1,7 @@
-# express-ws #
+# express-ws [![Dependency Status](https://www.versioneye.com/nodejs/express-ws/badge?style=flat)](https://www.versioneye.com/nodejs/express-ws)
 WebSocket endpoints for express applications. Gives WebSocket connections access to functionality from express middlewares.
 
-## Installation ##
+## Installation
 `npm install express-ws`
 
 ## Usage
