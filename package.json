@@ -1,22 +1,22 @@
 {
   "name": "express-ws",
   "version": "1.0.0",
-  "description": "WebSocket endpoints for express applications",
+  "description": "WebSocket endpoints for Express applications",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepublish": "npm run build",
+    "build": "babel src/ -d lib/",
+    "lint": "eslint src/"
   },
   "author": "Henning Morud <henning@morud.org>",
   "contributors": [
     "Jesús Leganés Combarro <piranna@gmail.com>",
+    "Sven Slootweg <admin@cryto.net>",
     "Andrew Phillips <theasp@gmail.com>"
   ],
   "license": "BSD-2-Clause",
   "dependencies": {
     "ws": "^1.0.0"
-  },
-  "devDependencies": {
-    "express": "^4.0.0"
   },
   "peerDependencies": {
     "express": "^4.0.0"
@@ -36,5 +36,11 @@
   "bugs": {
     "url": "https://github.com/HenningM/express-ws/issues"
   },
-  "homepage": "https://github.com/HenningM/express-ws"
+  "homepage": "https://github.com/HenningM/express-ws",
+  "devDependencies": {
+    "babel-cli": "^6.5.1",
+    "babel-preset-es2015": "^6.5.0",
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "^5.0.0"
+  }
 }
