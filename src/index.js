@@ -48,6 +48,7 @@ export function expressWs(app, httpServer, options = {}) {
     /* By setting this fake `.url` on the request, we ensure that it will end up in the fake
      * `.get` handler that we defined above - where the wrapper will then unpack the `.ws`
      * property, indicate that the WebSocket has been handled, and call the actual handler. */
+    const originalUrl = request.url;
     request.url = websocketUrl(request.url);
 
     const dummyResponse = new http.ServerResponse(request);
@@ -63,8 +64,41 @@ export function expressWs(app, httpServer, options = {}) {
       if (!request.wsHandled) {
         /* There was no matching WebSocket-specific route for this request. We'll close
          * the connection, as no endpoint was able to handle the request anyway... */
-        socket.close();
+        // socket.close(); // This will close the connection before listeners below catch it.
       }
+    });
+
+    /* We send GET requests on every events in order to let users use Express middleware
+     * chains to handle these events */
+    socket.on("error", function(error) {
+      request.url = websocketUrl(originalUrl, "error");
+      request.wsParams = { error };
+      app.handle(request, dummyResponse);
+    });
+    socket.on("close", function(code, message) {
+      request.url = websocketUrl(originalUrl, "close");
+      request.wsParams = { code, message };
+      app.handle(request, dummyResponse);
+    });
+    socket.on("message", function(data, flags) {
+      request.url = websocketUrl(originalUrl, "message");
+      request.wsParams = { data, flags };
+      app.handle(request, dummyResponse);
+    });
+    socket.on("ping", function(data, flags) {
+      request.url = websocketUrl(originalUrl, "ping");
+      request.wsParams = { data, flags };
+      app.handle(request, dummyResponse);
+    });
+    socket.on("pong", function(data, flags) {
+      request.url = websocketUrl(originalUrl, "pong");
+      request.wsParams = { data, flags };
+      app.handle(request, dummyResponse);
+    });
+    socket.on("open", function() {
+      request.url = websocketUrl(originalUrl, "open");
+      request.wsParams = {};
+      app.handle(request, dummyResponse);
     });
   });
 

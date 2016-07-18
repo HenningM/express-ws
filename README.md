@@ -42,6 +42,23 @@ router.ws('/echo', function(ws, req) {
 app.use("/ws-stuff", router);
 ```
 
+We can also listen to the socket when receiving a message rather than when the connection establishes, using `wsMessage`, `wsOpen`, `wsClose`, `wsPing`, `wsPong`, `wsError` methods. This helps passing the message through middlewares. The original parameters of the callback function are stored in `req.wsParams`:
+
+```javascript```
+app.wsMessage("/", function(ws, req, next) {
+    ws.send("1: "+req.wsParams.data); // this will be sent.
+    next();
+});
+
+app.wsMessage("/", function(ws, req, next) {
+    ws.send("2: "+req.wsParams.data); // this will be sent, too.
+});
+
+app.wsMessage("/", function(ws, req) {
+    ws.send("3: "+req.wsParams.data); // this won't be sent.
+});
+```
+
 ## Full example
 
 ```javascript
