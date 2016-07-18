@@ -119,6 +119,42 @@ Sets up `express-ws` on the given `router` (or other Router-like object). You wi
 
 In most cases, you won't need this at all.
 
+### app.ws(path, ...middlewares)
+
+Set middlewares to handle WebSocket request after connection establishes.
+
+Signature of a middleware (same below): `function(ws, req)`, where `ws` is as in [ws](https://www.npmjs.com/package/ws) module.
+
+### app.wsError(path, ...middlewares)
+
+Set middlewares to handle WebSocket connection when an error event occurs.
+
+It will set `req.wsParams.error` for error message as in callback parameter of `ws.onError`.
+
+Things are similar below.
+
+### app.wsClose(path, ...middlewares)
+
+Will set `req.wsParams.code` and `req.wsParams.message`.
+
+### app.wsMessage(path, ...middlewares)
+
+Will set `req.wsParams.data` and `req.wsParams.flags`.
+
+### app.wsPing(path, ...middlewares)
+
+Will set `req.wsParams.data` and `req.wsParams.flags`.
+
+### app.wsPong(path, ...middlewares)
+
+Will set `req.wsParams.data` and `req.wsParams.flags`.
+
+### app.wsOpen(path, ...middlewares)
+
+Will set nothing extra.
+
+All methods added to `app` will also be added to `Router` if `leaveRouterUntouched` is off.
+
 ## Development
 
 This module is written in ES6, and uses Babel for compilation. What this means in practice:
