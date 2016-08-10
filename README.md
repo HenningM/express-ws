@@ -80,6 +80,7 @@ Sets up `express-ws` on the specified `app`. This will modify the global Router 
 * __server__: *Optional.* When using a custom `http.Server`, you should pass it in here, so that `express-ws` can use it to set up the WebSocket upgrade handlers. If you don't specify a `server`, you will only be able to use it with the server that is created automatically when you call `app.listen`.
 * __options__: *Optional.* An object containing further options.
   * __leaveRouterUntouched:__ Set this to `true` to keep `express-ws` from modifying the Router prototype. You will have to manually `applyTo` every Router that you wish to make `.ws` available on, when this is enabled.
+  * __wsOptions:__ Options object passed to WebSocketServer constructor. Necessary for any ws specific features.
 
 This function will return a new `express-ws` API object, which will be referred to as `wsInstance` in the rest of the documentation.
 
