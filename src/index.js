@@ -37,7 +37,10 @@ export function expressWs(app, httpServer, options = {}) {
     addWsMethod(express.Router);
   }
 
-  const wsServer = new ws.Server({ server });
+  // allow caller to pass in options to WebSocketServer constructor
+  var wsOptions = options.wsOptions || {};
+  wsOptions.server = server;
+  const wsServer = new ws.Server(wsOptions);
 
   wsServer.on('connection', (socket) => {
     const request = socket.upgradeReq;
