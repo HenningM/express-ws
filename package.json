@@ -12,7 +12,9 @@
   "contributors": [
     "Jesús Leganés Combarro <piranna@gmail.com>",
     "Sven Slootweg <admin@cryto.net>",
-    "Andrew Phillips <theasp@gmail.com>"
+    "Andrew Phillips <theasp@gmail.com>",
+    "Nicholas Schell <nschell@gmail.com>",
+    "Max Truxa <dev@maxtruxa.com>"
   ],
   "license": "BSD-2-Clause",
   "dependencies": {
