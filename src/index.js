@@ -18,7 +18,7 @@ export function expressWs(app, httpServer, options = {}) {
     server = http.createServer(app);
 
     app.listen = function serverListen() {
-      server.listen.apply(server, arguments);
+      return server.listen.apply(server, arguments);
     };
   }
 
