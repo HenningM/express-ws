@@ -72,7 +72,7 @@ export function expressWs(app, httpServer, options = {}) {
       if (!request.wsHandled) {
         /* There was no matching WebSocket-specific route for this request. We'll close
          * the connection, as no endpoint was able to handle the request anyway... */
-        // socket.close(); // This will close the connection before listeners below catch it.
+        socket.close();
       }
     });
 

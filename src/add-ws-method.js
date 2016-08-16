@@ -33,6 +33,10 @@ export default function addWsMethod(target) {
          * leave the regular middleware execution and error handling to Express. */
         this.get.apply(this, [wsRoute].concat(wrappedMiddlewares));
 
+        /* Prevent the socket from being closed automatically */
+        if (method != 'ws')
+          this.ws(route, (ws, req, next) => { next(); });
+
         /*
          * Return `this` to allow for chaining:
          */
