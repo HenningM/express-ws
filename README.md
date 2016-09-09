@@ -1,6 +1,6 @@
 # express-ws [![Dependency Status](https://www.versioneye.com/nodejs/express-ws/badge?style=flat)](https://www.versioneye.com/nodejs/express-ws)
 
-[WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) endpoints for [Express](http://expressjs.com/) applications. Lets you define WebSocket endpoints like any other type of route, and applies regular Express midddleware like for anything else.
+[WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) endpoints for [Express](http://expressjs.com/) applications. Lets you define WebSocket endpoints like any other type of route, and applies regular Express middleware like for anything else.
 
 Version 2.0 of this library contains a breaking change. Please make sure to read [CHANGELOG.md](CHANGELOG.md) before upgrading.
 
