@@ -1,6 +1,6 @@
 {
   "name": "express-ws",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "WebSocket endpoints for Express applications",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
     "ws": "^1.0.0"
   },
   "peerDependencies": {
-    "express": "^4.0.0"
+    "express": "^4.0.0 || ^5.0.0-alpha.2"
   },
   "directories": {
     "example": "examples"
