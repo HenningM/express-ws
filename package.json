@@ -14,7 +14,8 @@
     "Sven Slootweg <admin@cryto.net>",
     "Andrew Phillips <theasp@gmail.com>",
     "Nicholas Schell <nschell@gmail.com>",
-    "Max Truxa <dev@maxtruxa.com>"
+    "Max Truxa <dev@maxtruxa.com>",
+    "Kræn Hansen <mail@kraenhansen.dk>"
   ],
   "license": "BSD-2-Clause",
   "dependencies": {
