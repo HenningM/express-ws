@@ -43,24 +43,33 @@ export function expressWs(app, httpServer, options = {}) {
   const wsServer = new ws.Server(wsOptions);
 
   wsServer.on('connection', (socket) => {
-    const request = socket.upgradeReq;
+    const newRequest = function() {
+      const request = { ws: socket, wsHandled: false };
+      Object.assign(request, socket.upgradeReq);
+      request.__proto__ = socket.upgradeReq.__proto__;
+      return request;
+    };
 
-    request.ws = socket;
-    request.wsHandled = false;
+    const newResponse = function(request) {
+      const dummyResponse = new http.ServerResponse(request);
+
+      dummyResponse.writeHead = function writeHead(statusCode) {
+        if (statusCode > 200) {
+          /* Something in the middleware chain signalled an error. */
+          socket.close();
+        }
+      };
+
+      return dummyResponse;
+    };
+
+    const request = newRequest();
+    const dummyResponse = newResponse(request);
 
     /* By setting this fake `.url` on the request, we ensure that it will end up in the fake
      * `.get` handler that we defined above - where the wrapper will then unpack the `.ws`
      * property, indicate that the WebSocket has been handled, and call the actual handler. */
     request.url = websocketUrl(request.url);
-
-    const dummyResponse = new http.ServerResponse(request);
-
-    dummyResponse.writeHead = function writeHead(statusCode) {
-      if (statusCode > 200) {
-        /* Something in the middleware chain signalled an error. */
-        socket.close();
-      }
-    };
 
     app.handle(request, dummyResponse, () => {
       if (!request.wsHandled) {
@@ -68,6 +77,51 @@ export function expressWs(app, httpServer, options = {}) {
          * the connection, as no endpoint was able to handle the request anyway... */
         socket.close();
       }
+    });
+
+    /* We send GET requests on every events in order to let users use Express middleware
+     * chains to handle these events */
+    socket.on("error", function(error) {
+      const request = newRequest();
+      const dummyResponse = newResponse(request);
+      request.url = websocketUrl(request.url, "error");
+      request.wsParams = { error };
+      app.handle(request, dummyResponse);
+    });
+    socket.on("close", function(code, message) {
+      const request = newRequest();
+      const dummyResponse = newResponse(request);
+      request.url = websocketUrl(request.url, "close");
+      request.wsParams = { code, message };
+      app.handle(request, dummyResponse);
+    });
+    socket.on("message", function(data, flags) {
+      const request = newRequest();
+      const dummyResponse = newResponse(request);
+      request.url = websocketUrl(request.url, "message");
+      request.wsParams = { data, flags };
+      app.handle(request, dummyResponse);
+    });
+    socket.on("ping", function(data, flags) {
+      const request = newRequest();
+      const dummyResponse = newResponse(request);
+      request.url = websocketUrl(request.url, "ping");
+      request.wsParams = { data, flags };
+      app.handle(request, dummyResponse);
+    });
+    socket.on("pong", function(data, flags) {
+      const request = newRequest();
+      const dummyResponse = newResponse(request);
+      request.url = websocketUrl(request.url, "pong");
+      request.wsParams = { data, flags };
+      app.handle(request, dummyResponse);
+    });
+    socket.on("open", function() {
+      const request = newRequest();
+      const dummyResponse = newResponse(request);
+      request.url = websocketUrl(request.url, "open");
+      request.wsParams = {};
+      app.handle(request, dummyResponse);
     });
   });
 

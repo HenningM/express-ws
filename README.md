@@ -42,6 +42,23 @@ router.ws('/echo', function(ws, req) {
 app.use("/ws-stuff", router);
 ```
 
+We can also listen to the socket when receiving a message rather than when the connection establishes, using `wsMessage`, `wsOpen`, `wsClose`, `wsPing`, `wsPong`, `wsError` methods. This helps passing the message through middlewares. The original parameters of the callback function are stored in `req.wsParams`:
+
+```javascript```
+app.wsMessage("/", function(ws, req, next) {
+    ws.send("1: "+req.wsParams.data); // this will be sent.
+    next();
+});
+
+app.wsMessage("/", function(ws, req, next) {
+    ws.send("2: "+req.wsParams.data); // this will be sent, too.
+});
+
+app.wsMessage("/", function(ws, req) {
+    ws.send("3: "+req.wsParams.data); // this won't be sent.
+});
+```
+
 ## Full example
 
 ```javascript
@@ -102,6 +119,42 @@ Sets up `express-ws` on the given `router` (or other Router-like object). You wi
 2. You are using a custom router that is not based on the express.Router prototype.
 
 In most cases, you won't need this at all.
+
+### app.ws(path, ...middlewares)
+
+Set middlewares to handle WebSocket request after connection establishes.
+
+Signature of a middleware (same below): `function(ws, req)`, where `ws` is as in [ws](https://www.npmjs.com/package/ws) module.
+
+### app.wsError(path, ...middlewares)
+
+Set middlewares to handle WebSocket connection when an error event occurs.
+
+It will set `req.wsParams.error` for error message as in callback parameter of `ws.onError`.
+
+Things are similar below.
+
+### app.wsClose(path, ...middlewares)
+
+Will set `req.wsParams.code` and `req.wsParams.message`.
+
+### app.wsMessage(path, ...middlewares)
+
+Will set `req.wsParams.data` and `req.wsParams.flags`.
+
+### app.wsPing(path, ...middlewares)
+
+Will set `req.wsParams.data` and `req.wsParams.flags`.
+
+### app.wsPong(path, ...middlewares)
+
+Will set `req.wsParams.data` and `req.wsParams.flags`.
+
+### app.wsOpen(path, ...middlewares)
+
+Will set nothing extra.
+
+All methods added to `app` will also be added to `Router` if `leaveRouterUntouched` is off.
 
 ## Development
 
