@@ -6,8 +6,7 @@
   "scripts": {
     "prepublish": "npm run build",
     "build": "babel src/ -d lib/",
-    "lint": "eslint src/",
-    "postinstall": "babel src/ -d lib/"
+    "lint": "eslint src/"
   },
   "author": "Henning Morud <henning@morud.org>",
   "contributors": [
