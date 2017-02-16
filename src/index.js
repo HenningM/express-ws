@@ -10,15 +10,15 @@ import ws from 'ws';
 import websocketUrl from './websocket-url';
 import addWsMethod from './add-ws-method';
 
-export function expressWs(app, httpServer, options = {}) {
+export default function expressWs(app, httpServer, options = {}) {
   let server = httpServer;
 
   if (server === null || server === undefined) {
     /* No HTTP server was explicitly provided, create one for our Express application. */
     server = http.createServer(app);
 
-    app.listen = function serverListen() {
-      return server.listen.apply(server, arguments);
+    app.listen = function serverListen(...args) {
+      return server.listen(...args);
     };
   }
 
@@ -38,7 +38,7 @@ export function expressWs(app, httpServer, options = {}) {
   }
 
   // allow caller to pass in options to WebSocketServer constructor
-  var wsOptions = options.wsOptions || {};
+  const wsOptions = options.wsOptions || {};
   wsOptions.server = server;
   const wsServer = new ws.Server(wsOptions);
 

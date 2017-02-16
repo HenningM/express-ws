@@ -19,7 +19,7 @@ export default function addWsMethod(target) {
       /* Here we configure our new GET route. It will never get called by a client
        * directly, it's just to let our request propagate internally, so that we can
        * leave the regular middleware execution and error handling to Express. */
-      this.get.apply(this, [wsRoute].concat(wrappedMiddlewares));
+      this.get(...[wsRoute].concat(wrappedMiddlewares));
 
       /*
        * Return `this` to allow for chaining:

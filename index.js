@@ -1,1 +1,1 @@
-module.exports = require("./lib").expressWs;
+module.exports = require("./lib").default;
