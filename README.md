@@ -1,8 +1,6 @@
 # express-ws [![Dependency Status](https://www.versioneye.com/nodejs/express-ws/badge?style=flat)](https://www.versioneye.com/nodejs/express-ws)
 
-[WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) endpoints for [Express](http://expressjs.com/) applications. Lets you define WebSocket endpoints like any other type of route, and applies regular Express middleware like for anything else.
-
-Version 2.0 of this library contains a breaking change. Please make sure to read [CHANGELOG.md](CHANGELOG.md) before upgrading.
+[WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) endpoints for [Express](http://expressjs.com/) applications. Lets you define WebSocket endpoints like any other type of route, and applies regular Express middleware. The WebSocket support is implemented with the help of the [ws](https://github.com/websockets/ws) library.
 
 ## Installation
 
@@ -18,7 +16,7 @@ Add this line to your Express application:
 var expressWs = require('express-ws')(app);
 ```
 
-Now you will be able to add WebSocket routes (almost) the same way you add other routes. The following snippet sets up a simple echo server at `/echo`.
+Now you will be able to add WebSocket routes (almost) the same way you add other routes. The following snippet sets up a simple echo server at `/echo`.  The `ws` parameter is an instance of the WebSocket class described [here](https://github.com/websockets/ws/blob/master/doc/ws.md#class-websocket).
 
 ```javascript
 app.ws('/echo', function(ws, req) {
