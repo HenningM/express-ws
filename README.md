@@ -16,7 +16,9 @@ Add this line to your Express application:
 var expressWs = require('express-ws')(app);
 ```
 
-Now you will be able to add WebSocket routes (almost) the same way you add other routes. The following snippet sets up a simple echo server at `/echo`.  The `ws` parameter is an instance of the WebSocket class described [here](https://github.com/websockets/ws/blob/master/doc/ws.md#class-websocket).
+__Important: Make sure to set up the `express-ws` module like above *before* loading or defining your routers!__ Otherwise, `express-ws` won't get a chance to set up support for Express routers, and you might run into an error along the lines of `router.ws is not a function`.
+
+After setting up `express-ws`, you will be able to add WebSocket routes (almost) the same way you add other routes. The following snippet sets up a simple echo server at `/echo`.  The `ws` parameter is an instance of the WebSocket class described [here](https://github.com/websockets/ws/blob/master/doc/ws.md#class-websocket).
 
 ```javascript
 app.ws('/echo', function(ws, req) {
