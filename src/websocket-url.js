@@ -1,11 +1,8 @@
-import trailingSlash from './trailing-slash';
-
-/* The following fixes HenningM/express-ws#17, correctly. */
+/**
+ * Converts a request URL into a websocket URL. Preserves trailing
+ * slashes and correctly handles query params and hash fragments.
+ * @param {string} url Request URL to process
+ */
 export default function websocketUrl(url) {
-  if (url.indexOf('?') !== -1) {
-    const [baseUrl, query] = url.split('?');
-
-    return `${trailingSlash(baseUrl)}.websocket?${query}`;
-  }
-  return `${trailingSlash(url)}.websocket`;
+  return url.replace(/(\/)?((?:\?|#).*)?$/, '/.websocket$1$2');
 }

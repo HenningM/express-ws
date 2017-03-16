@@ -1,5 +1,5 @@
 import wrapMiddleware from './wrap-middleware';
-import websocketUrl from './websocket-url';
+import websocketRoute from './websocket-route';
 
 export default function addWsMethod(target) {
   /* This prevents conflict with other things setting `.ws`. */
@@ -14,7 +14,7 @@ export default function addWsMethod(target) {
        * Whereas the original `express-ws` prefixed this path segment, we suffix it -
        * this makes it possible to let requests propagate through Routers like normal,
        * which allows us to specify WebSocket routes on Routers as well \o/! */
-      const wsRoute = websocketUrl(route);
+      const wsRoute = websocketRoute(route);
 
       /* Here we configure our new GET route. It will never get called by a client
        * directly, it's just to let our request propagate internally, so that we can
