@@ -4,5 +4,5 @@
  * @param {string} url Request URL to process
  */
 export default function websocketUrl(url) {
-  return url.replace(/(\/)?((?:\?|#).*)?$/, '/.websocket$1$2');
+  return url.replace(/(\/)?(\?.*)?$/, '/.websocket$1$2');
 }
