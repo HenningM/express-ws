@@ -60,6 +60,7 @@ export default function expressWs(app, httpServer, options = {}) {
     dummyResponse.writeHead = function writeHead(statusCode) {
       if (statusCode > 200) {
         /* Something in the middleware chain signalled an error. */
+        dummyResponse._header = '';
         socket.close();
       }
     };
