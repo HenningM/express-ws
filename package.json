@@ -19,7 +19,7 @@
   ],
   "license": "BSD-2-Clause",
   "dependencies": {
-    "ws": "^2.0.0"
+    "ws": "^3.3.3"
   },
   "peerDependencies": {
     "express": "^4.0.0 || ^5.0.0-alpha.1"
@@ -49,6 +49,6 @@
     "eslint": "^3.15.0",
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",
-    "express": "^5.0.0-alpha.1"
+    "express": "^5.0.0-alpha.6"
   }
 }
