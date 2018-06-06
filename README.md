@@ -1,4 +1,4 @@
-# express-ws [![Dependency Status](https://www.versioneye.com/nodejs/express-ws/badge?style=flat)](https://www.versioneye.com/nodejs/express-ws)
+# express-ws [![Dependency Status](https://snyk.io/test/github/henningm/express-ws/badge.svg)](https://snyk.io/test/github/henningm/express-ws)
 
 [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) endpoints for [Express](http://expressjs.com/) applications. Lets you define WebSocket endpoints like any other type of route, and applies regular Express middleware. The WebSocket support is implemented with the help of the [ws](https://github.com/websockets/ws) library.
 
