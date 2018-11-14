@@ -105,7 +105,4 @@ In most cases, you won't need this at all.
 
 ## Development
 
-This module is written in ES6, and uses Babel for compilation. What this means in practice:
-
-* The source code lives in the `src/` directory.
-* After changing this code, make sure to run `npm run build` to compile it.
+This module is written in ES6 and uses ESM.

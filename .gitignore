@@ -1,3 +1,4 @@
 node_modules/
-lib/
 *.sw[po]
+yarn.lock
+package-lock.json
