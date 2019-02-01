@@ -106,3 +106,13 @@ In most cases, you won't need this at all.
 ## Development
 
 This module is written in ES6 and uses ESM.
+
+## Known Issue with express-generator
+
+the Express generator will create it's own HTTP server listener inside ".\bin\www" instead of using the one express-ws has patched to allow websocket transactions. This results in calls to websockets to returning a 404 error. Call ```app.listen``` yourself to prevent this. 
+For Example:
+```javascript
+var port = normalizePort(process.env.PORT || '3002');
+app.set('port', port);
+var server = app.listen(port);
+```
