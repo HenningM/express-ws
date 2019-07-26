@@ -22,9 +22,14 @@ export default function expressWs(app, httpServer, options = {}) {
     };
   }
 
+  // allow caller to pass in options to WebSocketServer constructor
+  const wsOptions = options.wsOptions || {};
+  wsOptions.server = server;
+  const wsServer = new ws.Server(wsOptions);
+
   /* Create the Express Web Socket object (we do this here so we can bind any routes to it
      so that they can easily access the WebSocket Server clients to broadcast to them) */
-  let me = {
+  const me = {
     app,
     getWss: function getWss() {
       return wsServer;
@@ -32,7 +37,7 @@ export default function expressWs(app, httpServer, options = {}) {
     applyTo: function applyTo(router) {
       addWsMethod(router, this);
     }
-  }
+  };
 
   /* Make our custom `.ws` method available directly on the Express application. You should
    * really be using Routers, though. */
@@ -48,11 +53,6 @@ export default function expressWs(app, httpServer, options = {}) {
   if (!options.leaveRouterUntouched) {
     addWsMethod(express.Router, me);
   }
-
-  // allow caller to pass in options to WebSocketServer constructor
-  const wsOptions = options.wsOptions || {};
-  wsOptions.server = server;
-  const wsServer = new ws.Server(wsOptions);
 
   wsServer.on('connection', (socket, request) => {
     if ('upgradeReq' in socket) {
