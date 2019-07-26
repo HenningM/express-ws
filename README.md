@@ -88,11 +88,13 @@ This function will return a new `express-ws` API object, which will be referred 
 
 This property contains the `app` that `express-ws` was set up on.
 
-### wsInstance.getWss()
+### wsInstance.getWss(/* optional */ route)
 
 Returns the underlying WebSocket server/handler. You can use `wsInstance.getWss().clients` to obtain a list of all the connected WebSocket clients for this server.
 
 Note that this list will include *all* clients, not just those for a specific route - this means that it's often *not* a good idea to use this for broadcasts, for example.
+
+To get just the clients for a given route, please specify the route using the optional `route` parameter.
 
 ### wsInstance.applyTo(router)
 
@@ -102,6 +104,10 @@ Sets up `express-ws` on the given `router` (or other Router-like object). You wi
 2. You are using a custom router that is not based on the express.Router prototype.
 
 In most cases, you won't need this at all.
+
+### A note on route scope
+
+Routes are bound to the wsInstance so you can access `.getWss()` and `.app` via `this` in your routes even if the original wsInstance is not in scope (e.g., if you have your routes defined in external files).
 
 ## Development
 
