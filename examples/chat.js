@@ -7,7 +7,7 @@ var app = expressWs.app;
 app.ws('/chat', function(ws, req) {
 
   ws.on('message', message => {
-    this.getWss().clients.forEach(client => {
+    this.getWss('/chat').clients.forEach(client => {
       client.send(message)
     })
   })
