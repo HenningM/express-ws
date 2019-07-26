@@ -22,9 +22,21 @@ export default function expressWs(app, httpServer, options = {}) {
     };
   }
 
+  /* Create the Express Web Socket object (we do this here so we can bind any routes to it
+     so that they can easily access the WebSocket Server clients to broadcast to them) */
+  let me = {
+    app,
+    getWss: function getWss() {
+      return wsServer;
+    },
+    applyTo: function applyTo(router) {
+      addWsMethod(router, this);
+    }
+  }
+
   /* Make our custom `.ws` method available directly on the Express application. You should
    * really be using Routers, though. */
-  addWsMethod(app);
+  addWsMethod(app, me);
 
   /* Monkeypatch our custom `.ws` method into Express' Router prototype. This makes it possible,
    * when using the standard Express Router, to use the `.ws` method without any further calls
@@ -34,7 +46,7 @@ export default function expressWs(app, httpServer, options = {}) {
    * function is simultaneously the prototype that gets assigned to the resulting Router
    * object. */
   if (!options.leaveRouterUntouched) {
-    addWsMethod(express.Router);
+    addWsMethod(express.Router, me);
   }
 
   // allow caller to pass in options to WebSocketServer constructor
@@ -74,13 +86,5 @@ export default function expressWs(app, httpServer, options = {}) {
     });
   });
 
-  return {
-    app,
-    getWss: function getWss() {
-      return wsServer;
-    },
-    applyTo: function applyTo(router) {
-      addWsMethod(router);
-    }
-  };
+  return me;
 }

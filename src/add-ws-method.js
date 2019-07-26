@@ -1,11 +1,11 @@
 import wrapMiddleware from './wrap-middleware';
 import websocketUrl from './websocket-url';
 
-export default function addWsMethod(target) {
+export default function addWsMethod(target, self) {
   /* This prevents conflict with other things setting `.ws`. */
   if (target.ws === null || target.ws === undefined) {
     target.ws = function addWsRoute(route, ...middlewares) {
-      const wrappedMiddlewares = middlewares.map(wrapMiddleware);
+      const wrappedMiddlewares = middlewares.map(fn => fn.bind(self)).map(wrapMiddleware);
 
       /* We append `/.websocket` to the route path here. Why? To prevent conflicts when
        * a non-WebSocket request is made to the same GET route - after all, we are only
