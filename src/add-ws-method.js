@@ -5,6 +5,15 @@ export default function addWsMethod(target) {
   /* This prevents conflict with other things setting `.ws`. */
   if (target.ws === null || target.ws === undefined) {
     target.ws = function addWsRoute(route, ...middlewares) {
+      // In case you are using app.ws(["/a", "/b"], ...middlewares) like it works in express, we map ws to all routes
+      if(route instanceof Array) {
+        const routes = route.map(route => {
+          return target.ws(route, ...middlewares);
+        });
+
+        return routes[0];
+      }
+
       const wrappedMiddlewares = middlewares.map(wrapMiddleware);
 
       /* We append `/.websocket` to the route path here. Why? To prevent conflicts when
