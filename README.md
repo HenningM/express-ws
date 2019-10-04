@@ -88,13 +88,11 @@ This function will return a new `express-ws` API object, which will be referred 
 
 This property contains the `app` that `express-ws` was set up on.
 
-### wsInstance.getWss(/* optional */ route)
+### wsInstance.getWss()
 
 Returns the underlying WebSocket server/handler. You can use `wsInstance.getWss().clients` to obtain a list of all the connected WebSocket clients for this server.
 
 Note that this list will include *all* clients, not just those for a specific route - this means that it's often *not* a good idea to use this for broadcasts, for example.
-
-To get just the clients for a given route, please specify the route using the optional `route` parameter.
 
 ### wsInstance.applyTo(router)
 
