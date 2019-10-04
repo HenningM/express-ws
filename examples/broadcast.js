@@ -1,16 +1,14 @@
-var express = require('express');
-var expressWs = require('..');
+const express = require('express');
+const expressWs = require('..')(express());
 
-var expressWs = expressWs(express());
-var app = expressWs.app;
+const app = expressWs.app;
 
-app.ws('/broadcast', function(ws, req) {
-});
-var wss = expressWs.getWss();
+app.ws('/broadcast');
+const wss = expressWs.getWss();
 
-setInterval(function () {
+setInterval(() => {
   // Note that these messages will be sent to all clients.
-  wss.clients.forEach(function (client) {
+  wss.clients.forEach((client) => {
     client.send('hello');
   });
 }, 5000);

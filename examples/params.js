@@ -1,26 +1,25 @@
-var express = require('express');
-var expressWs = require('..');
+const express = require('express');
+const expressWs = require('..')(express());
 
-var expressWs = expressWs(express());
-var app = expressWs.app;
+const app = expressWs.app;
 
-app.param('world', function (req, res, next, world) {
+app.param('world', (req, res, next, world) => {
   req.world = world || 'world';
   return next();
 });
 
-app.get('/hello/:world', function(req, res, next){
-  console.log('hello', req.world);
+app.get('/hello/:world', (req, res, next) => {
+  console.log('hello', req.world); // eslint-disable-line no-console
   res.end();
   next();
 });
 
-app.ws('/hello/:world', function(ws, req, next) {
-  ws.on('message', function(msg) {
-    console.log(msg);
+app.ws('/hello/:world', (ws, req, next) => {
+  ws.on('message', (msg) => {
+    console.log(msg); // eslint-disable-line no-console
   });
-  console.log('socket hello', req.world);
+  console.log('socket hello', req.world); // eslint-disable-line no-console
   next();
 });
 
-app.listen(3000)
+app.listen(3000);
