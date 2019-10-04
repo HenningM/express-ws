@@ -36,6 +36,38 @@ export default function expressWs(app, httpServer, options = {}) {
     },
     applyTo: function applyTo(router) {
       addWsMethod(router, this);
+    },
+    setRoom: function setRoom(request) {
+      return request.url.replace('/.websocket', '');
+    },
+    broadcast: function broadcast(
+      currentClient,
+      message,
+      options = { skipSelf: true, allClients: false } // eslint-disable-line no-shadow
+    ) {
+      let recipients = 0;
+
+      wsServer.clients.forEach((client) => {
+        // Ensure that messages are only sent to clients connected to this route (/chat).
+        let shouldBroadcastToThisClient = true;
+
+        if (options.skipSelf) {
+          shouldBroadcastToThisClient = shouldBroadcastToThisClient && client !== currentClient;
+        }
+
+        if (currentClient.room !== undefined && !options.allClients) {
+          shouldBroadcastToThisClient = shouldBroadcastToThisClient
+            && client.room === currentClient.room;
+        }
+
+        const theSocketIsOpen = currentClient.readyState === 1; /* WebSocket.OPEN */
+
+        if (shouldBroadcastToThisClient && theSocketIsOpen) {
+          client.send(message);
+          recipients += 1;
+        }
+      });
+      return recipients;
     }
   };
 
