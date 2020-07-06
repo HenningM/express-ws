@@ -13,7 +13,7 @@ __Full documentation can be found in the API section below. This section only sh
 Add this line to your Express application:
 
 ```javascript
-var expressWs = require('express-ws')(app);
+const expressWs = require('express-ws')(app);
 ```
 
 __Important: Make sure to set up the `express-ws` module like above *before* loading or defining your routers!__ Otherwise, `express-ws` won't get a chance to set up support for Express routers, and you might run into an error along the lines of `router.ws is not a function`.
@@ -21,8 +21,8 @@ __Important: Make sure to set up the `express-ws` module like above *before* loa
 After setting up `express-ws`, you will be able to add WebSocket routes (almost) the same way you add other routes. The following snippet sets up a simple echo server at `/echo`.  The `ws` parameter is an instance of the WebSocket class described [here](https://github.com/websockets/ws/blob/master/doc/ws.md#class-websocket).
 
 ```javascript
-app.ws('/echo', function(ws, req) {
-  ws.on('message', function(msg) {
+app.ws('/echo', (ws, req) => {
+  ws.on('message', (msg) => {
     ws.send(msg);
   });
 });
@@ -31,10 +31,10 @@ app.ws('/echo', function(ws, req) {
 It works with routers, too, this time at `/ws-stuff/echo`:
 
 ```javascript
-var router = express.Router();
+const router = express.Router();
 
-router.ws('/echo', function(ws, req) {
-  ws.on('message', function(msg) {
+router.ws('/echo', (ws, req) => {
+  ws.on('message', (msg) => {
     ws.send(msg);
   });
 });
@@ -45,23 +45,23 @@ app.use("/ws-stuff", router);
 ## Full example
 
 ```javascript
-var express = require('express');
-var app = express();
-var expressWs = require('express-ws')(app);
+const express = require('express');
+const app = express();
+const expressWs = require('express-ws')(app);
 
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   console.log('middleware');
   req.testing = 'testing';
   return next();
 });
 
-app.get('/', function(req, res, next){
+app.get('/', (req, res, next) => {
   console.log('get route', req.testing);
   res.end();
 });
 
-app.ws('/', function(ws, req) {
-  ws.on('message', function(msg) {
+app.ws('/', (ws, req) => {
+  ws.on('message', (msg) => {
     console.log(msg);
   });
   console.log('socket', req.testing);

@@ -5,7 +5,7 @@
   "main": "index",
   "module": "src/index",
   "scripts": {
-    "lint": "eslint src/"
+    "lint": "eslint ."
   },
   "author": "Henning Morud <henning@morud.org>",
   "contributors": [
@@ -46,7 +46,7 @@
   "homepage": "https://github.com/HenningM/express-ws",
   "devDependencies": {
     "eslint": "^4.19.0",
-    "eslint-config-airbnb": "^14.1.0",
+    "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.12.0",
     "express": "^5.0.0-alpha.6"
   }
