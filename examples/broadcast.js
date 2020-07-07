@@ -6,13 +6,13 @@ const app = expressWs.app;
 
 app.ws('/a', (/* ws, req */) => {
 });
-const aWss = expressWs.getWss('/a');
+const wss = expressWs.getWss();
 
 app.ws('/b', (/* ws, req */) => {
 });
 
 setInterval(() => {
-  aWss.clients.forEach((client) => {
+  wss.clients.forEach((client) => {
     client.send('hello');
   });
 }, 5000);

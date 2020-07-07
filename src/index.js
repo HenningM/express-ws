@@ -43,10 +43,6 @@ export default function expressWs(app, httpServer, options = {}) {
   const wsServer = new ws.Server(wsOptions);
 
   wsServer.on('connection', (socket, request) => {
-    if ('upgradeReq' in socket) {
-      request = socket.upgradeReq;
-    }
-
     request.ws = socket;
     request.wsHandled = false;
 

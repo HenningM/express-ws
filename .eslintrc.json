@@ -2,7 +2,19 @@
   "extends": "airbnb/base",
   "overrides": [
     {
-      "files": "examples/**",
+      "files": ["examples/**"],
+      "rules": {
+        "no-console": 0
+      }
+    },
+    {
+      "files": ["test/**"],
+      "env": {
+        "mocha": true
+      },
+      "globals": {
+        "expect": true
+      },
       "rules": {
         "no-console": 0
       }
