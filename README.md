@@ -39,7 +39,7 @@ router.ws('/echo', (ws, req) => {
   });
 });
 
-app.use("/ws-stuff", router);
+app.use('/ws-stuff', router);
 ```
 
 ## Full example
@@ -80,26 +80,26 @@ Sets up `express-ws` on the specified `app`. This will modify the global Router 
 * __server__: *Optional.* When using a custom `http.Server`, you should pass it in here, so that `express-ws` can use it to set up the WebSocket upgrade handlers. If you don't specify a `server`, you will only be able to use it with the server that is created automatically when you call `app.listen`.
 * __options__: *Optional.* An object containing further options.
   * __leaveRouterUntouched:__ Set this to `true` to keep `express-ws` from modifying the Router prototype. You will have to manually `applyTo` every Router that you wish to make `.ws` available on, when this is enabled.
-  * __wsOptions:__ Options object passed to WebSocketServer constructor. Necessary for any ws specific features.
+  * __wsOptions:__ Options object passed to `ws.Server` constructor. Necessary for any ws specific features.
 
-This function will return a new `express-ws` API object, which will be referred to as `wsInstance` in the rest of the documentation.
+This function will return a new `express-ws` API object, which will be referred to as `expressWsInstance` in the rest of the documentation.
 
-### wsInstance.app
+### expressWsInstance.app
 
 This property contains the `app` that `express-ws` was set up on.
 
-### wsInstance.getWss()
+### expressWsInstance.getWss()
 
-Returns the underlying WebSocket server/handler. You can use `wsInstance.getWss().clients` to obtain a list of all the connected WebSocket clients for this server.
+Returns the underlying WebSocket server/handler. You can use `expressWsInstance.getWss().clients` to obtain a list of all the connected WebSocket clients for this server.
 
 Note that this list will include *all* clients, not just those for a specific route - this means that it's often *not* a good idea to use this for broadcasts, for example.
 
-### wsInstance.applyTo(router)
+### expressWsInstance.applyTo(router)
 
 Sets up `express-ws` on the given `router` (or other Router-like object). You will only need this in two scenarios:
 
 1. You have enabled `options.leaveRouterUntouched`, or
-2. You are using a custom router that is not based on the express.Router prototype.
+2. You are using a custom router that is not based on the `express.Router` prototype.
 
 In most cases, you won't need this at all.
 
