@@ -1,0 +1,15 @@
+{
+  "extends": "airbnb/base",
+  "overrides": [
+    {
+      "files": "examples/**",
+      "rules": {
+        "no-console": 0
+      }
+    }
+  ],
+  "rules": {
+    "comma-dangle": 0,
+    "no-param-reassign": 0
+  }
+}
