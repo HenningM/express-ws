@@ -1,0 +1,36 @@
+language: node_js
+os: linux
+dist: xenial
+
+node_js:
+  - 14
+  - 12
+  - 10
+
+notifications:
+  email: false
+
+script:
+  - npm test
+  - 'if [ -n "${LINT-}" ]; then npm run lint; fi'
+
+before_install:
+  - npm config set depth 0
+
+before_script: >
+  node_version=$(node -v);
+  npm install --no-save "express@${EXPRESS}"
+
+env:
+  jobs:
+    - EXPRESS=4
+    - EXPRESS=5.0.0-alpha.8
+jobs:
+  fast_finish: true
+  include:
+    - node_js: 'lts/*'
+      env: LINT=true
+# If Express exclusions needed by Node version
+#  exclude:
+#    - node_js: 10
+#      env: EXPRESS=7

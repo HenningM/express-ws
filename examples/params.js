@@ -1,26 +1,26 @@
-var express = require('express');
-var expressWs = require('..');
+const express = require('express');
+let expressWs = require('..');
 
-var expressWs = expressWs(express());
-var app = expressWs.app;
+expressWs = expressWs(express());
+const { app } = expressWs;
 
-app.param('world', function (req, res, next, world) {
+app.param('world', (req, res, next, world) => {
   req.world = world || 'world';
   return next();
 });
 
-app.get('/hello/:world', function(req, res, next){
+app.get('/hello/:world', (req, res, next) => {
   console.log('hello', req.world);
   res.end();
   next();
 });
 
-app.ws('/hello/:world', function(ws, req, next) {
-  ws.on('message', function(msg) {
+app.ws('/hello/:world', (ws, req, next) => {
+  ws.on('message', (msg) => {
     console.log(msg);
   });
   console.log('socket hello', req.world);
   next();
 });
 
-app.listen(3000)
+app.listen(3000);

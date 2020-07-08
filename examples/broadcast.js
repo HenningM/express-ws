@@ -1,20 +1,20 @@
-var express = require('express');
-var expressWs = require('..')
+const express = require('express');
+let expressWs = require('..');
 
-var expressWs = expressWs(express());
-var app = expressWs.app;
+expressWs = expressWs(express());
+const { app } = expressWs;
 
-app.ws('/a', function(ws, req) {
+app.ws('/a', (/* ws, req */) => {
 });
-var aWss = expressWs.getWss('/a');
+const wss = expressWs.getWss();
 
-app.ws('/b', function(ws, req) {
+app.ws('/b', (/* ws, req */) => {
 });
 
-setInterval(function () {
-  aWss.clients.forEach(function (client) {
+setInterval(() => {
+  wss.clients.forEach((client) => {
     client.send('hello');
   });
 }, 5000);
 
-app.listen(3000)
+app.listen(3000);
