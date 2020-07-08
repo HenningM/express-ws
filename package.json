@@ -6,8 +6,9 @@
   "module": "src/index",
   "scripts": {
     "mocha": "mocha --require esm --require chai/register-expect --timeout 20000 test",
-    "test": "echo 'Blanking out cache for ESM/nyc that can get corrupted by terminated processes...' && rm -Rf ./node_modules/.cache && nyc npm run mocha",
-    "lint": "eslint ."
+    "nyc": "echo 'Blanking out cache for ESM/nyc that can get corrupted by terminated processes...' && rm -Rf ./node_modules/.cache && nyc npm run mocha",
+    "lint": "eslint --report-unused-disable-directives .",
+    "test": "npm run lint && npm run nyc"
   },
   "author": "Henning Morud <henning@morud.org>",
   "contributors": [
@@ -21,7 +22,7 @@
   ],
   "license": "BSD-2-Clause",
   "engines": {
-    "node": ">=4.5.0"
+    "node": ">=10.0.0"
   },
   "directories": {
     "example": "examples"
@@ -40,19 +41,19 @@
   },
   "homepage": "https://github.com/HenningM/express-ws",
   "dependencies": {
-    "esm": "^3.0.84",
-    "ws": "^6.0.0"
+    "esm": "^3.2.25",
+    "ws": "^7.3.1"
   },
   "peerDependencies": {
     "express": "^4.0.0 || ^5.0.0-alpha.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "eslint": "^4.19.0",
-    "eslint-config-airbnb": "^15.1.0",
-    "eslint-plugin-import": "^2.12.0",
-    "express": "^5.0.0-alpha.6",
-    "got": "^11.4.0",
+    "eslint": "^7.4.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "express": "^5.0.0-alpha.8",
+    "got": "^11.5.0",
     "mocha": "^8.0.1",
     "nyc": "^15.1.0"
   }

@@ -2,7 +2,7 @@ const express = require('express');
 let expressWs = require('..');
 
 expressWs = expressWs(express());
-const app = expressWs.app;
+const { app } = expressWs;
 
 app.param('world', (req, res, next, world) => {
   req.world = world || 'world';

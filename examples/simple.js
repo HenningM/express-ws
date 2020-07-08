@@ -2,7 +2,7 @@ const express = require('express');
 let expressWs = require('..');
 
 expressWs = expressWs(express());
-const app = expressWs.app;
+const { app } = expressWs;
 
 app.use((req, res, next) => {
   console.log('middleware');

@@ -1,7 +1,6 @@
 import http from 'http';
 import express from 'express';
 import WebSocket from 'ws';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import got from 'got';
 import expressWs from '../src';
 
@@ -308,18 +307,19 @@ describe('Error handling', () => {
         try {
           ws.send('server response');
         } catch (err) {
-          expect(messages).to.deep.equal([
-            'middleware 1',
-            'middleware 2',
-            'socket',
-            'something',
-          ]);
+          // For `ws` 6, this should be the error
           expect(err.toString()).to.include('WebSocket is not open');
-          ws.terminate(); // Close WS client
-          server.close(); // Close HTTP server underlying WS server
-          expressWsInstance.getWss().close(); // Close WS server
-          done();
         }
+        expect(messages).to.deep.equal([
+          'middleware 1',
+          'middleware 2',
+          'socket',
+          'something',
+        ]);
+        ws.terminate(); // Close WS client
+        server.close(); // Close HTTP server underlying WS server
+        expressWsInstance.getWss().close(); // Close WS server
+        done();
       });
       messages.push('socket');
     });
