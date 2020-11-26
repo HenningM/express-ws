@@ -2,6 +2,10 @@
 
 [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) endpoints for [Express](http://expressjs.com/) applications. Lets you define WebSocket endpoints like any other type of route, and applies regular Express middleware. The WebSocket support is implemented with the help of the [ws](https://github.com/websockets/ws) library.
 
+## Why the Reedsy fork?
+
+We need to bump the version of `ws` to a more recent version. Sadly `npm` provides no mechanism to do this, so we fork instead.
+
 ## Installation
 
 `npm install --save express-ws`
