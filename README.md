@@ -1,6 +1,6 @@
 # @devfolioco/express-ws [![Dependency Status](https://snyk.io/test/github/henningm/express-ws/badge.svg)](https://snyk.io/test/github/henningm/express-ws)
 
-Fork of the express-ws package with some added functionality
+Fork of the [express-ws](https://github.com/HenningM/express-ws) package with some added functionality
 
 [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) endpoints for [Express](http://expressjs.com/) applications. Lets you define WebSocket endpoints like any other type of route, and applies regular Express middleware. The WebSocket support is implemented with the help of the [ws](https://github.com/websockets/ws) library.
 
