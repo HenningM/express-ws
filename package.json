@@ -4,6 +4,7 @@
   "description": "WebSocket endpoints for Express applications",
   "main": "index",
   "module": "src/index",
+  "types": "index.d.ts",
   "scripts": {
     "lint": "eslint src/"
   },
