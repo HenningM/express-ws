@@ -108,3 +108,24 @@ In most cases, you won't need this at all.
 ## Development
 
 This module is written in ES6 and uses ESM.
+
+### Publish a beta to Github Package Registry
+
+To publish a beta version of the package to the 
+Github Package Registry, follow these steps:
+
+1. Update the `version` in the `package.json` file to
+    
+    `1.0.1-BE-000-dev-0.0.1`
+
+    _Replace 000 with the issue number from [Linear](http://Linear.app)_
+
+    _Example_
+
+    `1.0.1-BE-000-dev-0.0.1`
+
+2. Release the package with the `beta` tag
+
+```bash
+npm publish --tag beta
+```
