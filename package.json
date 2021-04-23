@@ -1,6 +1,6 @@
 {
   "name": "@devfolioco/express-ws",
-  "version": "5.0.0-BE-682-dev-0.0.1",
+  "version": "5.0.0-BE-682-dev-0.0.4",
   "description": "WebSocket endpoints for Express applications",
   "main": "index",
   "module": "src/index",
