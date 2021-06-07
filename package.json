@@ -1,6 +1,6 @@
 {
   "name": "express-ws",
-  "version": "5.0.1",
+  "version": "5.0.0",
   "description": "WebSocket endpoints for Express applications",
   "main": "index",
   "module": "src/index",
@@ -20,7 +20,7 @@
   "license": "BSD-2-Clause",
   "dependencies": {
     "esm": "^3.0.84",
-    "ws": "^7.4.6"
+    "ws": "^6.0.0"
   },
   "peerDependencies": {
     "express": "^4.0.0 || ^5.0.0-alpha.1"
@@ -45,8 +45,8 @@
   },
   "homepage": "https://github.com/HenningM/express-ws",
   "devDependencies": {
-    "eslint": "^7.27.0",
-    "eslint-config-airbnb": "^18.2.1",
+    "eslint": "^4.19.0",
+    "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.12.0",
     "express": "^5.0.0-alpha.6"
   }
