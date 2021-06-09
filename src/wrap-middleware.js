@@ -4,7 +4,7 @@ export default function wrapMiddleware(middleware) {
       req.wsHandled = true;
       try {
         /* Unpack the `.ws` property and call the actual handler. */
-        middleware(req.ws, req, next);
+        return middleware(req.ws, req, next);
       } catch (err) {
         /* If an error is thrown, let's send that on to any error handling */
         next(err);
