@@ -22,9 +22,58 @@ export default function expressWs(app, httpServer, options = {}) {
     };
   }
 
+  // allow caller to pass in options to WebSocketServer constructor
+  const wsOptions = options.wsOptions || {};
+  wsOptions.server = server;
+  const wsServer = new ws.Server(wsOptions);
+
+  /* Create the Express Web Socket object (we do this here so we can bind any routes to it
+     so that they can easily access the WebSocket Server clients to broadcast to them) */
+  const me = {
+    app,
+    getWss: function getWss() {
+      return wsServer;
+    },
+    applyTo: function applyTo(router) {
+      addWsMethod(router, this);
+    },
+    setRoom: function setRoom(request) {
+      return request.url.replace('/.websocket', '');
+    },
+    broadcast: function broadcast(
+      currentClient,
+      message,
+      options = { skipSelf: true, allClients: false } // eslint-disable-line no-shadow
+    ) {
+      let recipients = 0;
+
+      wsServer.clients.forEach((client) => {
+        // Ensure that messages are only sent to clients connected to this route (/chat).
+        let shouldBroadcastToThisClient = true;
+
+        if (options.skipSelf) {
+          shouldBroadcastToThisClient = shouldBroadcastToThisClient && client !== currentClient;
+        }
+
+        if (currentClient.room !== undefined && !options.allClients) {
+          shouldBroadcastToThisClient = shouldBroadcastToThisClient
+            && client.room === currentClient.room;
+        }
+
+        const theSocketIsOpen = currentClient.readyState === 1; /* WebSocket.OPEN */
+
+        if (shouldBroadcastToThisClient && theSocketIsOpen) {
+          client.send(message);
+          recipients += 1;
+        }
+      });
+      return recipients;
+    }
+  };
+
   /* Make our custom `.ws` method available directly on the Express application. You should
    * really be using Routers, though. */
-  addWsMethod(app);
+  addWsMethod(app, me);
 
   /* Monkeypatch our custom `.ws` method into Express' Router prototype. This makes it possible,
    * when using the standard Express Router, to use the `.ws` method without any further calls
@@ -34,13 +83,8 @@ export default function expressWs(app, httpServer, options = {}) {
    * function is simultaneously the prototype that gets assigned to the resulting Router
    * object. */
   if (!options.leaveRouterUntouched) {
-    addWsMethod(express.Router);
+    addWsMethod(express.Router, me);
   }
-
-  // allow caller to pass in options to WebSocketServer constructor
-  const wsOptions = options.wsOptions || {};
-  wsOptions.server = server;
-  const wsServer = new ws.Server(wsOptions);
 
   wsServer.on('connection', (socket, request) => {
     if ('upgradeReq' in socket) {
@@ -74,13 +118,5 @@ export default function expressWs(app, httpServer, options = {}) {
     });
   });
 
-  return {
-    app,
-    getWss: function getWss() {
-      return wsServer;
-    },
-    applyTo: function applyTo(router) {
-      addWsMethod(router);
-    }
-  };
+  return me;
 }

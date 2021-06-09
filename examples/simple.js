@@ -1,25 +1,24 @@
-var express = require('express');
-var expressWs = require('..');
+const express = require('express');
+const expressWs = require('..')(express());
 
-var expressWs = expressWs(express());
-var app = expressWs.app;
+const app = expressWs.app;
 
-app.use(function (req, res, next) {
-  console.log('middleware');
+app.use((req, res, next) => {
+  console.log('middleware'); // eslint-disable-line no-console
   req.testing = 'testing';
   return next();
 });
 
-app.get('/', function(req, res, next){
-  console.log('get route', req.testing);
+app.get('/', (req, res) => {
+  console.log('get route', req.testing); // eslint-disable-line no-console
   res.end();
 });
 
-app.ws('/', function(ws, req) {
-  ws.on('message', function(msg) {
-    console.log(msg);
+app.ws('/', (ws, req) => {
+  ws.on('message', (msg) => {
+    console.log(msg); // eslint-disable-line no-console
   });
-  console.log('socket', req.testing);
+  console.log('socket', req.testing); // eslint-disable-line no-console
 });
 
-app.listen(3000)
+app.listen(3000);

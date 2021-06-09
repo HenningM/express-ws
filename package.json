@@ -5,7 +5,7 @@
   "main": "index",
   "module": "src/index",
   "scripts": {
-    "lint": "eslint src/"
+    "lint": "eslint src/ && eslint examples/"
   },
   "author": "Henning Morud <henning@morud.org>",
   "contributors": [
