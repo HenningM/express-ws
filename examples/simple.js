@@ -1,7 +1,7 @@
 var express = require('express');
-var expressWs = require('..');
+var expressWsLib = require('..');
 
-var expressWs = expressWs(express());
+var expressWs = expressWsLib(express());
 var app = expressWs.app;
 
 app.use(function (req, res, next) {
