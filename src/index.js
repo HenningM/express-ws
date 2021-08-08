@@ -40,7 +40,7 @@ export default function expressWs(app, httpServer, options = {}) {
   // allow caller to pass in options to WebSocketServer constructor
   const wsOptions = options.wsOptions || {};
   wsOptions.server = server;
-  const wsServer = new ws.Server(wsOptions);
+  const wsServer = options.wsServer || new ws.Server(wsOptions);
 
   wsServer.on('connection', (socket, request) => {
     if ('upgradeReq' in socket) {
