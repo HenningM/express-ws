@@ -1,5 +1,5 @@
 # 
-Only difference from express-ws [![Dependency Status](https://snyk.io/test/github/henningm/express-ws/badge.svg)](https://snyk.io/test/github/henningm/express-ws)
+Only difference from [express-ws](https://snyk.io/test/github/henningm/express-ws)
 is the method getWssClients(url) that fetchs clients of a given URL
 
 ```javascript
