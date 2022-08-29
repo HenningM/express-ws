@@ -43,6 +43,8 @@ export default function expressWs(app, httpServer, options = {}) {
   const wsServer = new ws.Server(wsOptions);
 
   wsServer.on('connection', (socket, request) => {
+    socket.wsUrl = request.url;
+
     if ('upgradeReq' in socket) {
       request = socket.upgradeReq;
     }
@@ -78,6 +80,14 @@ export default function expressWs(app, httpServer, options = {}) {
     app,
     getWss: function getWss() {
       return wsServer;
+    },
+    getWssClients: function getWssClients(url) {
+      if (!url) {
+        return wsServer.clients;
+      }
+
+      const clients = Array.from(wsServer.clients);
+      return clients ? clients.filter((client) => client.wsUrl === url) : [];
     },
     applyTo: function applyTo(router) {
       addWsMethod(router);
