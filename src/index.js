@@ -7,7 +7,7 @@ import http from 'http';
 import express from 'express';
 import ws from 'ws';
 
-import websocketUrl from './websocket-url';
+import websocketUrl, { websocketUrlCheck } from './websocket-url';
 import addWsMethod from './add-ws-method';
 
 export default function expressWs(app, httpServer, options = {}) {
@@ -37,10 +37,27 @@ export default function expressWs(app, httpServer, options = {}) {
     addWsMethod(express.Router);
   }
 
-  // allow caller to pass in options to WebSocketServer constructor
-  const wsOptions = options.wsOptions || {};
-  wsOptions.server = server;
-  const wsServer = new ws.Server(wsOptions);
+  // Handle the server's event `upgrade` to check the url's accessablility.
+  const wsServer = new ws.Server({ noServer: true });
+
+  server.on('upgrade', (request, socket, head) => {
+    const wsOriginalURL = request.url;
+    request.wsUrlChecked = false;
+    request.url = websocketUrlCheck(request.url);
+    const dummyResponse = new http.ServerResponse(request);
+    app.handle(request, dummyResponse, () => {
+      if (!request.wsUrlChecked) {
+        /* There was no matching WebSocket-specific route for this request. We'll close
+         * the connection, as no endpoint was able to handle the request anyway... */
+        socket.destroy();
+      } else {
+        wsServer.handleUpgrade(request, socket, head, (_ws) => {
+          request.url = wsOriginalURL;
+          wsServer.emit('connection', _ws, request);
+        });
+      }
+    });
+  });
 
   wsServer.on('connection', (socket, request) => {
     if ('upgradeReq' in socket) {
