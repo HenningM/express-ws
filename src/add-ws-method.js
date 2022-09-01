@@ -25,7 +25,8 @@ export default function addWsMethod(target) {
        * `/.websocket_check` to config a route. when we handle the upgrade the event,
        * we pipeline the req and res to let the Express check whether the url is avaliable.
       */
-      this.get(websocketUrlCheck, (req, res, next) => {
+      const wsRouteCheck = websocketUrlCheck(route);
+      this.get(wsRouteCheck, (req, res, next) => {
         req.wsUrlChecked = true;
         next();
       });
