@@ -38,7 +38,7 @@
     "LICENSE",
     "README.md",
     "index.js",
-    "lib/"
+    "lib/*.js"
   ],
   "repository": {
     "type": "git",
