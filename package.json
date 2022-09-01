@@ -5,7 +5,8 @@
   "main": "index",
   "module": "src/index",
   "scripts": {
-    "lint": "eslint src/"
+    "lint": "eslint src/",
+    "build": "babel src -d lib"
   },
   "author": "Henning Morud <henning@morud.org>",
   "contributors": [
@@ -47,6 +48,7 @@
   "devDependencies": {
     "@babel/cli": "^7.18.10",
     "@babel/core": "^7.18.13",
+    "@babel/preset-env": "^7.18.10",
     "eslint": "^7.27.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.12.0",
