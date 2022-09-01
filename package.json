@@ -3,7 +3,7 @@
   "version": "5.0.1",
   "description": "WebSocket endpoints for Express applications",
   "main": "index",
-  "module": "src/index",
+  "module": "lib/index",
   "scripts": {
     "lint": "eslint src/",
     "build": "babel src -d lib"
@@ -32,6 +32,13 @@
   "directories": {
     "example": "examples"
   },
+  "files": [
+    "index.js",
+    "LICENSE",
+    "README.md",
+    "index.js",
+    "lib/"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/HenningM/express-ws"
