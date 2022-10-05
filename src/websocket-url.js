@@ -9,3 +9,5 @@ export default function websocketUrl(url) {
   }
   return `${trailingSlash(url)}.websocket`;
 }
+/* used to check the route avaliable */
+export const websocketUrlCheck = (url) => `${websocketUrl(url)}_check`;

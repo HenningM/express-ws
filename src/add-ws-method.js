@@ -1,5 +1,5 @@
 import wrapMiddleware from './wrap-middleware';
-import websocketUrl from './websocket-url';
+import websocketUrl, { websocketUrlCheck } from './websocket-url';
 
 export default function addWsMethod(target) {
   /* This prevents conflict with other things setting `.ws`. */
@@ -20,6 +20,16 @@ export default function addWsMethod(target) {
        * directly, it's just to let our request propagate internally, so that we can
        * leave the regular middleware execution and error handling to Express. */
       this.get(...[wsRoute].concat(wrappedMiddlewares));
+
+      /* This is a trick. Just as what it is above, we use a trick url appending with
+       * `/.websocket_check` to config a route. when we handle the upgrade the event,
+       * we pipeline the req and res to let the Express check whether the url is avaliable.
+      */
+      const wsRouteCheck = websocketUrlCheck(route);
+      this.get(wsRouteCheck, (req, res, next) => {
+        req.wsUrlChecked = true;
+        next();
+      });
 
       /*
        * Return `this` to allow for chaining:
